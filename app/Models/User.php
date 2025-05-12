@@ -47,4 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Relation with User where it may or may not belong to a user
+     */
+    public function recipes() {
+        return $this->hasMany(Recipe::class);
+    }
 }
