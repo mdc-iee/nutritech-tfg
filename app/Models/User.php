@@ -25,7 +25,8 @@ class User extends Authenticatable
         'age',
         'height',
         'weight',
-        'diet'
+        'diet',
+        'profile_image',
     ];
 
     /**

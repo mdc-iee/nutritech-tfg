@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +18,12 @@ use App\Http\Controllers\LoginController;
 
 Route::view('/login', "login")->name('login');
 Route::view('/registro', "register")->name('registro');
-// "->middleware('auth')" will avoid to enter the page by writing in the route 
+// "->middleware('auth')" will avoid to enter the page by writing in the route
 Route::view('/home', 'home')->middleware('auth')->name('home');
+Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth')->name('profile');
+
+Route::put('/profile', [ProfileController::class, 'update'])->middleware('auth')->name('perfil-update');
+Route::put('/perfil-update', [UserController::class, 'update'])->name('perfil-update');
 
 Route::post('/validar-registro', [LoginController::class, 'register'])->name('validar-registro');
 Route::post('/inicia-sesion', [LoginController::class, 'login'])->name('inicia-sesion');

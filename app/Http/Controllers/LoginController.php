@@ -41,7 +41,7 @@ class LoginController extends Controller
             'password.confirmed' => 'Las contraseñas no coinciden.',
         
             'age.integer' => 'La edad debe ser un número entero.',
-            'age.min' => 'La edad no puede ser menor que 0.',
+            'age.min' => 'La edad debe ser un número positivo.',
             'age.max' => 'La edad no puede ser mayor que 120.',
         
             'height.integer' => 'La altura debe ser un número entero.',

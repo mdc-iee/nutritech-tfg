@@ -6,6 +6,9 @@
         <title>Home</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <link rel="shortcut icon" href="{{ asset('img/LogoTFG.png')}}">
 
         <style>
@@ -51,27 +54,77 @@
             }
 
             header nav ul.menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-family: 'Playfair Display', serif;
             }
 
             header nav ul.menu li {
-            margin: 0 15px;
+                display: flex;
+                align-items: center;
+            }
+
+            header nav ul.menu li img {
+                height: 75px;
+                width: 75px;
+                border-radius: 50%;
+                border: 3px solid white;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
             }
 
             header nav ul.menu li a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            transition: color 0.3s;
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 16px;
+                transition: color 0.3s;
             }
 
             header nav ul.menu li a:hover {
-            color: #16a085; /* Verde más oscuro */
+                color: #16a085; /* Verde más oscuro */
+            }
+
+            .dropdown {
+                position: relative;
+            }
+
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: white;
+                color: black;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                display: none;
+                min-width: 150px;
+                z-index: 2000;
+                padding: 10px 0;
+            }
+
+            .dropdown-menu li {
+                padding: 8px 16px;
+                cursor: pointer;
+            }
+
+            .dropdown-menu li a {
+                color: black;
+                text-decoration: none;
+            }
+
+            .dropdown-menu li:hover {
+                background-color: #f0f0f0;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: block;
             }
 
             /* Contenido principal */
@@ -178,48 +231,66 @@
         </style>
     </head>
     <body>
-    <!-- Menú de navegación -->
-    <header>
-        <nav>
-        <ul class="menu">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Dietas Saludables</a></li>
-            <li><a href="#">Tabla de Ejercicios</a></li>
-            <li><a href="#">Servicios</a></li>
-            <li><a href="#">Contacto</a></li>
-        </ul>
-        </nav>
-    </header>
+        <!-- Menú de navegación -->
+        <header>
+            <nav>
+                <ul class="menu">
+                    <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
+                    <li><a href="#"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
+                    <li><img src="{{ asset('img/LogoTFG.png')}}" alt="Logo"></li>
+                    <li><a href="#"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
+                    <li><a href="{{route('profile')}}"><i class="fas fa-user"></i>Perfil</a></li>
+                    <li class="dropdown">
+                        <a href="#" id="userDropdown">
+                            {{Auth::user()->name}}
+                            @if(Auth::user()->profile_image)
+                                <img src="{{asset('storage/' . Auth::user()->profile_image)}}" 
+                                    alt="Foto de perfil" 
+                                    style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
+                            @else
+                                <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                            @endif
+                        </a>
 
-    <!-- Contenido principal -->
-    <h1>Selecciona tus alimentos</h1>
-    <form id="formAlimentos">
-        <label><input type="checkbox" value="lechuga"> Lechuga</label><br>
-        <label><input type="checkbox" value="tomate"> Tomate</label><br>
-        <label><input type="checkbox" value="atún"> Atún</label><br>
-        <label><input type="checkbox" value="pollo"> Pollo</label><br>
-        <label><input type="checkbox" value="arroz"> Arroz</label><br>
-        <label><input type="checkbox" value="huevo"> Huevo</label><br>
-        <label><input type="checkbox" value="pan"> Pan</label><br>
-        <label><input type="checkbox" value="queso"> Queso</label><br><br>
-        <button type="submit">Generar Receta</button>
-    </form>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{route('logout')}}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Cerrar sesión
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
-    <div id="resultado" class="receta"></div>
+        <!-- Contenido principal -->
+        <h1>Selecciona tus alimentos</h1>
+        <form id="formAlimentos">
+            <label><input type="checkbox" value="lechuga"> Lechuga</label><br>
+            <label><input type="checkbox" value="tomate"> Tomate</label><br>
+            <label><input type="checkbox" value="atún"> Atún</label><br>
+            <label><input type="checkbox" value="pollo"> Pollo</label><br>
+            <label><input type="checkbox" value="arroz"> Arroz</label><br>
+            <label><input type="checkbox" value="huevo"> Huevo</label><br>
+            <label><input type="checkbox" value="pan"> Pan</label><br>
+            <label><input type="checkbox" value="queso"> Queso</label><br><br>
+            <button type="submit">Generar Receta</button>
+        </form>
 
-    <script src="script.js"></script>
-
-        <section class="recomendaciones">
-        <h2>Recomendaciones de recetas</h2>
-        <ul>
-            <li><a href="#">Ensalada de aguacate y salmón</a></li>
-            <li><a href="#">Arroz integral con pollo y brócoli</a></li>
-            <li><a href="#">Smoothie verde detox</a></li>
-            <li><a href="#">Tortilla fitness con vegetales</a></li>
-        </ul>
-        </section>
-    </main>
-    <script>
+        <div id="resultado" class="receta"></div>
+            <section class="recomendaciones">
+            <h2>Recomendaciones de recetas</h2>
+            <ul>
+                <li><a href="#">Ensalada de aguacate y salmón</a></li>
+                <li><a href="#">Arroz integral con pollo y brócoli</a></li>
+                <li><a href="#">Smoothie verde detox</a></li>
+                <li><a href="#">Tortilla fitness con vegetales</a></li>
+            </ul>
+            </section>
+        </div>
+        <script>
             const recetas = [
                 {
                     nombre: "Ensalada Mixta",
@@ -260,6 +331,6 @@
         </script>
     </body>
     <footer>
-        <p>&copy; 2025 NutriTech. Todos los derechos reservados.</p>
+        <p>&copy; 2025 NutriTech - Todos los derechos reservados.</p>
     </footer>
 </html>

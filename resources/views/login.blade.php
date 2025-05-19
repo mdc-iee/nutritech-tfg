@@ -77,22 +77,22 @@
     </head>
     <body>
         <div class="login">
-            <img src="{{ asset('img/LogoTFG.png')}}" alt="Logo" height="150px" width="150px" style="border-radius: 50%;">
+            <img src="{{asset('img/LogoTFG.png')}}" alt="Logo" height="150px" width="150px" style="border-radius: 50%;">
             <div class="container align-center p-5">
                 <form method="POST" action="{{route('inicia-sesion')}}">
                     @csrf
                     <div class="mb-3">
                         <label for="emailInput" class="form-label">Email</label>
-                        <input type="email" class="input-line" id="emailInput" name="email" value="{{old('email')}}" required>
+                        <input type="email" class="input-line" id="emailInput" name="email" value="{{old('email')}}">
                         @error('email')
-                            <div class="text-danger mt-1">{{ $message }}</div>
+                            <div class="text-danger mt-1">{{$message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="passwordInput" class="form-label">Contraseña</label>
-                        <input type="password" class="input-line" id="passwordInput" name="password" required>
+                        <input type="password" class="input-line" id="passwordInput" name="password">
                         @error('password')
-                            <div class="text-danger mt-1">{{ $message }}</div>
+                            <div class="text-danger mt-1">{{$message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3 form-check">
