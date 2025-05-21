@@ -7,9 +7,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('css/nav.css')}}">
+        <script src="{{asset('js/nav.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <link rel="shortcut icon" href="{{ asset('img/LogoTFG.png')}}">
+        <link rel="shortcut icon" href="{{asset('img/LogoTFG.png')}}">
 
         <style>
             /* General */
@@ -40,166 +43,48 @@
             filter: blur(6px); /* Aplica desenfoque */
             z-index: -1; /* Coloca detrás de todo el contenido */
             }
-
-            /* Encabezado y menú de navegación */
-            header {
-            background-color: rgba(46, 204, 113, 0.9); /* Verde azulado con transparencia */
-            width: 100%;
-            padding: 10px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            }
-
-            header nav ul.menu {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: center;
-                gap: 30px;
-                font-family: 'Playfair Display', serif;
-            }
-
-            header nav ul.menu li {
-                display: flex;
-                align-items: center;
-            }
-
-            header nav ul.menu li img {
-                height: 75px;
-                width: 75px;
-                border-radius: 50%;
-                border: 3px solid white;
-                box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            }
-
-            header nav ul.menu li a {
-                text-decoration: none;
-                color: white;
-                font-weight: bold;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 16px;
-                transition: color 0.3s;
-            }
-
-            header nav ul.menu li a:hover {
-                color: #16a085; /* Verde más oscuro */
-            }
-
-            .dropdown {
-                position: relative;
-            }
-
-            .dropdown-menu {
-                position: absolute;
-                top: 100%;
-                right: 0;
-                background-color: white;
-                color: black;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                display: none;
-                min-width: 150px;
-                z-index: 2000;
-                padding: 10px 0;
-            }
-
-            .dropdown-menu li {
-                padding: 8px 16px;
-                cursor: pointer;
-            }
-
-            .dropdown-menu li a {
-                color: black;
-                text-decoration: none;
-            }
-
-            .dropdown-menu li:hover {
-                background-color: #f0f0f0;
-            }
-
-            .dropdown:hover .dropdown-menu {
-                display: block;
-            }
-
-            .form-switch .form-check-input {
-                width: 50px;
-                height: 25px;
-                background-color: #ccc;
-                border-radius: 25px;
-                transition: all 0.3s ease-in-out;
-                cursor: pointer;
-            }
-
-            .form-switch .form-check-input:checked {
-                background-color: #2ecc71;
-            }
-
-            .form-switch .form-check-input:before {
-                content: "";
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                width: 21px;
-                height: 21px;
-                background: white;
-                border-radius: 50%;
-                transition: 0.3s;
-            }
-
-            .form-switch .form-check-input:checked:before {
-                transform: translateX(25px);
-            }
-
-            /* Footer */
-            footer {
-            margin-top: 30px;
-            background-color: #2ecc71;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            width: 100%;
-            position: relative;
-            bottom: 0;
-            }
         </style>
     </head>
     <body>
-        <header>
+        <header style="background-color: rgba(46, 204, 113, 0.9); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); position: fixed; top: 0; width: 100%; z-index: 1000; ">
             <nav>
-                <ul class="menu">
-                    <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
-                    <li><a href="#"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
-                    <li><img src="{{ asset('img/LogoTFG.png')}}" alt="Logo"></li>
-                    <li><a href="#"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
-                    <li><a href="{{route('profile')}}"><i class="fas fa-user"></i>Perfil</a></li>
-                    <li class="dropdown">
-                        <a href="#" id="userDropdown">
+                <div class="menu-container">
+                    <div class="logo">
+                        <img src="{{ asset('img/LogoTFG.png')}}" alt="Logo">
+
+                        <div class="burger" onclick="toggleMenu()">☰</div>
+                    </div>
+
+                    <ul class="menu left">
+                        <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
+                        <li><a href="#"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
+                        <li><a href="{{route('profile')}}"><i class="fas fa-user"></i> Perfil</a></li>
+                    </ul>
+
+                    <ul class="menu right">
+                        <li class="dropdown">
+                            <a href="" id="userDropdown">
                             {{Auth::user()->name}}
                             @if(Auth::user()->profile_image)
-                                <img src="{{asset('storage/' . Auth::user()->profile_image)}}" 
-                                    alt="Foto de perfil" 
+                                <img src="{{asset('storage/' . Auth::user()->profile_image)}}" alt="Foto de perfil" 
                                     style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
                             @else
                                 <i class="fas fa-user-circle" style="font-size: 24px;"></i>
                             @endif
-                        </a>
+                            </a>
 
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{route('logout')}}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Cerrar sesión
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{route('logout')}}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Cerrar sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </header>
         <div class="container mt-5 mb-5">
@@ -214,8 +99,8 @@
                     <div class="row mb-4 text-center">
                         <div class="col-12">
                             @if(Auth::user()->profile_image)
-                            <img src="{{asset('storage/' . Auth::user()->profile_image) }}" alt="Foto de perfil" 
-                            class="rounded-circle shadow" style="width: 100px; height: 100px; object-fit: cover;">
+                                <img src="{{asset('storage/' . Auth::user()->profile_image) }}" alt="Foto de perfil" 
+                                class="rounded-circle shadow" style="width: 100px; height: 100px; object-fit: cover;">
                             @endif
                             <div>
                                 <label for="profile_image" class="form-label fw-bold">Cambiar foto de perfil:</label>
@@ -280,7 +165,7 @@
                                 <div class="toast align-items-center text-white bg-danger border-0 mb-2" role="alert">
                                     <div class="d-flex">
                                         <div class="toast-body">
-                                            {{ $error }}
+                                            {{$error}}
                                         </div>
                                         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                                     </div>
@@ -292,7 +177,6 @@
                 <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 2;"></div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const toastElList = [].slice.call(document.querySelectorAll('.toast'));
