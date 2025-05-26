@@ -57,7 +57,7 @@
 
                     <ul class="menu left">
                         <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
-                        <li><a href="#"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
+                        <li><a href="{{route('recipeForm')}}"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
                         <li><a href="#"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
                         <li><a href="{{route('profile')}}"><i class="fas fa-user"></i> Perfil</a></li>
                     </ul>
@@ -123,7 +123,7 @@
                         
                         <!-- Email -->
                         <div class="col-md-6">
-                            <label for="email" class="form-label fw-bold">Email:</label>
+                            <label for="email" class="form-label fw-bold required">Email:</label>
                             <input type="email" class="form-control" name="email" value="{{$user->email}}">
                         </div>
                         
@@ -173,7 +173,7 @@
                         </div>
                     @endif
                 </form>
-                <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 2;"></div>
+                <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2;"></div>
             </div>
         </div>
         <script>
@@ -199,8 +199,8 @@
                 new bootstrap.Toast(toastEl).show();
             }
         </script>
+        <footer>
+            <p>&copy; 2025 NutriTech - Todos los derechos reservados.</p>
+        </footer>
     </body>
-    <footer>
-        <p>&copy; 2025 NutriTech - Todos los derechos reservados.</p>
-    </footer>
 </html>

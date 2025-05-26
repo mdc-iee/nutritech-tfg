@@ -24,6 +24,6 @@ class Ingredient extends Model
      * Relation ManyToMany with Recipe
      */
     public function recipes() {
-        return $this->belongsToMany(Recipe::class)->withTimestamps();
+        return $this->belongsToMany(Recipe::class, 'recipe_with_ingredients')->withTimestamps();
     }
 }

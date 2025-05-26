@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('recipe_with_ingredients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('recipe_id')->unique()->references('id')->on('recipes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('ingredient_id')->unique()->references('id')->on('ingredients')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('recipe_id')->references('id')->on('recipes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

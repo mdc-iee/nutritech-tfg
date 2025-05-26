@@ -18,6 +18,7 @@ class Recipe extends Model
      */
     protected $fillable = [
         'name',
+        'user_id',
         'description',
         'instructions'
     ];
@@ -33,6 +34,6 @@ class Recipe extends Model
      * Relation ManyToMany with Ingredient
      */
     public function ingredients() {
-        return $this->belongsToMany(Ingredient::class)->withTimestamps();
+        return $this->belongsToMany(Ingredient::class, 'recipe_with_ingredients')->withTimestamps();
     }
 }

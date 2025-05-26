@@ -1,0 +1,61 @@
+.ts-wrapper {
+    border-radius: 10px;
+    border: 2px solid #27ae60;
+    background: #ffffff;
+    padding: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: border-color 0.3s;
+}
+
+.ts-wrapper.focus {
+    border-color: #2ecc71;
+}
+
+/* Selected options */
+.ts-wrapper .item {
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 10px;
+    margin: 2px;
+    font-weight: 500;
+}
+
+/* Dropdown */
+.ts-dropdown {
+    border-radius: 8px;
+    border: 1px solid #2ecc71;
+    background: #f9f9f9;
+}
+
+/* Options from the dropdown */
+.ts-dropdown .option {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ts-dropdown .option:hover {
+    background-color: #eafaf1;
+}
+
+/* Scrollbar style */
+.ts-dropdown ::-webkit-scrollbar {
+    width: 10px;
+}
+
+.ts-dropdown ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.ts-dropdown ::-webkit-scrollbar-thumb {
+    background-color: #27ae60;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0;
+}
+
+.ts-dropdown ::-webkit-scrollbar-thumb:hover {
+    background-color: #2ecc71;
+}
