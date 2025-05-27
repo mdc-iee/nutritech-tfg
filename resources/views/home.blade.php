@@ -157,8 +157,10 @@
                             <a href="" id="userDropdown">
                             {{Auth::user()->name}}
                             @if(Auth::user()->profile_image)
-                                <img src="{{asset('storage/' . Auth::user()->profile_image)}}" alt="Foto de perfil" 
-                                    style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
+                                <img src="{{Str::startsWith(Auth::user()->profile_image, 'img/') 
+                                ? asset(Auth::user()->profile_image) 
+                                : asset('storage/' . Auth::user()->profile_image)}}" 
+                                alt="Foto de perfil" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
                             @else
                                 <i class="fas fa-user-circle" style="font-size: 24px;"></i>
                             @endif

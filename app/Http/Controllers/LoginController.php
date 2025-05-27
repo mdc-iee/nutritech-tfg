@@ -67,6 +67,7 @@ class LoginController extends Controller
         $user->height = $request->height;
         $user->weight = $request->weight;
         $user->diet = $request->diet;
+        $user->profile_image = 'img/default_avatar.jpg';
 
         $user->save();
 

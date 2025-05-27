@@ -20,7 +20,8 @@ class Recipe extends Model
         'name',
         'user_id',
         'description',
-        'instructions'
+        'instructions',
+        'recipe_image'
     ];
 
     /**

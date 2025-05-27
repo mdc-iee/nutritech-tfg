@@ -7,12 +7,14 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+        <!-- Nav -->
         <link rel="stylesheet" href="{{asset('css/nav.css')}}">
         <script src="{{asset('js/nav.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Multiselect -->
         <link rel="stylesheet" href="{{asset('css/tomselect.css')}}">
-
         <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
         <!-- Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <link rel="shortcut icon" href="{{asset('img/LogoTFG.png')}}">
@@ -133,8 +135,10 @@
                             <a href="" id="userDropdown">
                             {{Auth::user()->name}}
                             @if(Auth::user()->profile_image)
-                                <img src="{{asset('storage/' . Auth::user()->profile_image)}}" alt="Foto de perfil" 
-                                    style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
+                                <img src="{{Str::startsWith(Auth::user()->profile_image, 'img/') 
+                                ? asset(Auth::user()->profile_image) 
+                                : asset('storage/' . Auth::user()->profile_image)}}" 
+                                alt="Foto de perfil" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
                             @else
                                 <i class="fas fa-user-circle" style="font-size: 24px;"></i>
                             @endif
@@ -153,12 +157,22 @@
             </nav>
         </header>
         
-        <form action="{{route('recipes-store')}}" method="POST">
+        <form action="{{route('recipes-store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
                 <label for="name" class="form-label required">Nombre de la receta</label>
                 <input type="text" class="form-control" name="name">
+            </div>
+            
+            <!-- Multi-select with the ingredients from the database -->
+            <div class="mb-3">
+                <label for="ingredients_existing" class="form-label required">Selecciona ingredientes:</label>
+                <select class="form-control" name="ingredients_existing[]" multiple>
+                    @foreach($ingredients as $ingredient)
+                        <option value="{{$ingredient->id}}">{{$ingredient->name}}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">
@@ -171,19 +185,38 @@
                 <textarea class="form-control" name="instructions"></textarea>
             </div>
 
-            <!-- Multi-select with the ingredients from the database -->
             <div class="mb-3">
-                <label for="ingredients_existing" class="form-label required">Selecciona ingredientes:</label>
-                <select class="form-control" name="ingredients_existing[]" multiple>
-                    @foreach($ingredients as $ingredient)
-                        <option value="{{$ingredient->id}}">{{$ingredient->name}}</option>
-                    @endforeach
-                </select>
+                <label for="image" class="form-label required">Imagen de la receta:</label>
+                <input type="file" class="form-control" name="recipe_image" id="recipe_image" accept="image/*">
             </div>
 
+            <!-- Preview of the image -->
+            <div class="mb-3">
+                <img id="preview" style="display: none; max-width: 300px; max-height: 200px; object-fit: cover; border-radius: 10px;"/>
+            </div>
+            @foreach(Auth::user()->recipes as $recipe)
+                @if($recipe->image)
+                    <img src="{{asset('storage/' . $recipe->image)}}" class="card-img-top" alt="Imagen de la receta">
+                @endif
+            @endforeach
+           <hr> 
             <button type="submit" class="btn btn-success">Crear receta</button>
+            @if ($errors->any())
+                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 2">
+                    @foreach ($errors->all() as $error)
+                        <div class="toast align-items-center text-white bg-danger border-0 mb-2" role="alert">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{$error}}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </form>
-        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+        <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2;"></div>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -201,6 +234,42 @@
                     }
                 });
             });
+
+            document.getElementById('recipe_image').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('preview');
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+                toastElList.forEach((toastEl) => {
+                    new bootstrap.Toast(toastEl).show();
+                });
+            });
+
+            function showToast(message, type = 'success') {
+                const toastHTML = `
+                    <div class="toast align-items-center text-white bg-${type} border-0 mb-2" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">${message}</div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                `;
+                const container = document.getElementById('toast-container');
+                container.insertAdjacentHTML('beforeend', toastHTML);
+                const toastEl = container.lastElementChild;
+                new bootstrap.Toast(toastEl).show();
+            }
         </script>
         <footer>
             <p>&copy; 2025 NutriTech - Todos los derechos reservados.</p>

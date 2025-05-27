@@ -43,6 +43,11 @@
             filter: blur(6px); /* Aplica desenfoque */
             z-index: -1; /* Coloca detrás de todo el contenido */
             }
+
+            label.required::after {
+                content: " *";
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -67,8 +72,10 @@
                             <a href="" id="userDropdown">
                             {{Auth::user()->name}}
                             @if(Auth::user()->profile_image)
-                                <img src="{{asset('storage/' . Auth::user()->profile_image)}}" alt="Foto de perfil" 
-                                    style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
+                                <img src="{{Str::startsWith(Auth::user()->profile_image, 'img/') 
+                                ? asset(Auth::user()->profile_image) 
+                                : asset('storage/' . Auth::user()->profile_image)}}" 
+                                alt="Foto de perfil" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
                             @else
                                 <i class="fas fa-user-circle" style="font-size: 24px;"></i>
                             @endif
@@ -98,12 +105,15 @@
                     <div class="row mb-4 text-center">
                         <div class="col-12">
                             @if(Auth::user()->profile_image)
-                                <img src="{{asset('storage/' . Auth::user()->profile_image) }}" alt="Foto de perfil" 
+                                <img id="profile_image_preview" alt="Foto de perfil"
+                                src="{{Str::startsWith(Auth::user()->profile_image, 'img/') 
+                                ? asset(Auth::user()->profile_image) 
+                                : asset('storage/' . Auth::user()->profile_image)}}" 
                                 class="rounded-circle shadow" style="width: 100px; height: 100px; object-fit: cover;">
                             @endif
                             <div>
                                 <label for="profile_image" class="form-label fw-bold">Cambiar foto de perfil:</label>
-                                <input type="file" class="form-control" name="profile_image" accept="image/*">
+                                <input type="file" class="form-control" name="profile_image" id="profile_image_input" accept="image/*">
                             </div>
                         </div>
                     </div>
@@ -111,7 +121,7 @@
                     <div class="row g-3">
                         <!-- Name -->
                         <div class="col-md-6">
-                            <label for="name" class="form-label fw-bold">Nombre:</label>
+                            <label for="name" class="form-label fw-bold required">Nombre:</label>
                             <input type="text" class="form-control" name="name" value="{{$user->name}}">
                         </div>
                         
@@ -177,6 +187,19 @@
             </div>
         </div>
         <script>
+            document.getElementById('profile_image_input').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('profile_image_preview');
+                if (file && preview) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.visibility = 'visible';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
             document.addEventListener('DOMContentLoaded', () => {
                 const toastElList = [].slice.call(document.querySelectorAll('.toast'));
                 toastElList.forEach((toastEl) => {
