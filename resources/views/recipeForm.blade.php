@@ -61,7 +61,7 @@
                 max-width: 600px;
                 width: 90%;
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-                margin-top: 60px; /* Espacio para el nav fijo */
+                margin-top: 110px;
             }
 
             form .form-label {
@@ -186,8 +186,11 @@
             </div>
 
             <div class="mb-3">
-                <label for="image" class="form-label required">Imagen de la receta:</label>
-                <input type="file" class="form-control" name="recipe_image" id="recipe_image" accept="image/*">
+                <label for="recipe_image" class="form-label required">Imagen de la receta:</label>
+                <label for="recipe_image" class="btn btn-outline-success w-100">
+                    <i class="fa fa-upload me-2"></i> Seleccionar imagen
+                </label>
+                <input type="file" name="recipe_image" id="recipe_image" accept="image/*" style="display:none;">
             </div>
 
             <!-- Preview of the image -->
@@ -219,8 +222,17 @@
         <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2;"></div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                new TomSelect('select[name="ingredients_existing[]"]', {
+            document.addEventListener('DOMContentLoaded', () => {
+                initTomSelect();
+                initImagePreview();
+                showToastsOnLoad();
+            });
+
+            function initTomSelect() {
+                const select = document.querySelector('select[name="ingredients_existing[]"]');
+                if (!select) return;
+
+                new TomSelect(select, {
                     plugins: ['remove_button'],
                     persist: false,
                     maxItems: null,
@@ -233,28 +245,41 @@
                         return exists ? false : { value: input, text: input };
                     }
                 });
-            });
+            }
 
-            document.getElementById('recipe_image').addEventListener('change', function (e) {
-                const file = e.target.files[0];
+            function initImagePreview() {
+                const input = document.getElementById('recipe_image');
                 const preview = document.getElementById('preview');
+                const fileNameText = document.getElementById('file-name');
 
-                if (file) {
+                if (!input) return;
+
+                input.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (!file) {
+                        if (fileNameText) fileNameText.textContent = "Ningún archivo seleccionado";
+                        return;
+                    }
+
                     const reader = new FileReader();
-                    reader.onload = function (e) {
-                        preview.src = e.target.result;
-                        preview.style.display = 'block';
+                    reader.onload = (e) => {
+                        if (preview) {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        }
                     };
                     reader.readAsDataURL(file);
-                }
-            });
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const toastElList = [].slice.call(document.querySelectorAll('.toast'));
-                toastElList.forEach((toastEl) => {
+                    if (fileNameText) fileNameText.textContent = file.name;
+                });
+            }
+
+            function showToastsOnLoad() {
+                const toastElList = Array.from(document.querySelectorAll('.toast'));
+                toastElList.forEach(toastEl => {
                     new bootstrap.Toast(toastEl).show();
                 });
-            });
+            }
 
             function showToast(message, type = 'success') {
                 const toastHTML = `
@@ -266,6 +291,7 @@
                     </div>
                 `;
                 const container = document.getElementById('toast-container');
+                if (!container) return;
                 container.insertAdjacentHTML('beforeend', toastHTML);
                 const toastEl = container.lastElementChild;
                 new bootstrap.Toast(toastEl).show();

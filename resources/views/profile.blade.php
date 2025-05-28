@@ -55,7 +55,7 @@
             <nav>
                 <div class="menu-container">
                     <div class="logo">
-                        <img src="{{ asset('img/LogoTFG.png')}}" alt="Logo">
+                        <img src="{{asset('img/LogoTFG.png')}}" alt="Logo">
 
                         <div class="burger" onclick="toggleMenu()">☰</div>
                     </div>
@@ -112,8 +112,11 @@
                                 class="rounded-circle shadow" style="width: 100px; height: 100px; object-fit: cover;">
                             @endif
                             <div>
-                                <label for="profile_image" class="form-label fw-bold">Cambiar foto de perfil:</label>
-                                <input type="file" class="form-control" name="profile_image" id="profile_image_input" accept="image/*">
+                                <label for="profile_image_input" class="form-label fw-bold">Cambiar foto de perfil:</label>
+                                <label for="profile_image_input" class="btn btn-outline-success w-100">
+                                    <i class="fa fa-upload me-2"></i> Seleccionar imagen
+                                </label>
+                                <input type="file" class="form-control d-none" name="profile_image" id="profile_image_input" accept="image/*">
                             </div>
                         </div>
                     </div>
@@ -187,20 +190,27 @@
             </div>
         </div>
         <script>
-            document.getElementById('profile_image_input').addEventListener('change', function(e) {
-                const file = e.target.files[0];
+            document.addEventListener('DOMContentLoaded', function () {
+                // Show image selected
+                const input = document.getElementById('profile_image_input');
                 const preview = document.getElementById('profile_image_preview');
-                if (file && preview) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.style.visibility = 'visible';
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
 
-            document.addEventListener('DOMContentLoaded', () => {
+                if (input && preview) {
+                    input.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                preview.src = e.target.result;
+                                preview.style.visibility = 'visible';
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                // Show validations if an error ocurred
                 const toastElList = [].slice.call(document.querySelectorAll('.toast'));
                 toastElList.forEach((toastEl) => {
                     new bootstrap.Toast(toastEl).show();

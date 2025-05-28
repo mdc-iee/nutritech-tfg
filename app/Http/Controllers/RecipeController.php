@@ -36,20 +36,16 @@ class RecipeController extends Controller
             'recipe_image.required' => 'La imagen de la receta es obligatoria.',
         ]);
 
+        $path = $request->file('recipe_image')->store('recipes', 'public');
+
         $recipe = Recipe::create([
             'name' => $request->name,
             'user_id' => auth()->id(),
             'description' => $request->description,
             'instructions' => $request->instructions,
+            'recipe_image' => $path,
         ]);
 
-        if ($request->hasFile('recipe_image')) {
-            $path = $request->file('recipe_image')->store('recipes', 'public');
-            $recipe->recipe_image = $path;
-        }
-
-        $recipe->save();
-        
         // The existing ingredients are associated
         foreach ($request->input('ingredients_existing', []) as $item) {
             if (is_numeric($item)) {
@@ -63,7 +59,8 @@ class RecipeController extends Controller
                 $recipe->ingredients()->attach($ingredient->id);
             }
         }
-
+        
+        $recipe->save();
         return redirect()->route('home')->with('success', 'Receta creada correctamente');
     }
 }
