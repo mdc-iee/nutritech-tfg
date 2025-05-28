@@ -114,7 +114,7 @@
         </style>
     </head>
     <body>
-        <header style="background-color: rgba(46, 204, 113, 0.9); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); position: fixed; top: 0; width: 100%; z-index: 1000; ">
+        <header>
             <nav>
                 <div class="menu-container">
                     <div class="logo">

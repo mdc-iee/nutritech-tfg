@@ -51,7 +51,7 @@
         </style>
     </head>
     <body>
-        <header style="background-color: rgba(46, 204, 113, 0.9); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); position: fixed; top: 0; width: 100%; z-index: 1000; ">
+        <header>
             <nav>
                 <div class="menu-container">
                     <div class="logo">
@@ -94,7 +94,7 @@
             </nav>
         </header>
         <div class="container mt-5 mb-5">
-            <div class="card shadow-lg p-4 bg-white rounded-3" style="max-width: 700px; margin: 0 auto;">
+            <div class="card shadow-lg p-4 bg-white rounded-3" style="max-width: 700px; margin: 0 auto; margin-top: 80px">
                 <h2 class="text-center text-success mb-4">Editar usuario</h2>
 
                 <form id="profile-form" action="{{route('perfil-update')}}" method="POST" enctype="multipart/form-data">

@@ -1,5 +1,5 @@
 header {
-    background-color: rgba(46, 204, 113, 0.9);
+    background-color: rgba(46, 204, 113, 1);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -43,6 +43,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .menu li a {
@@ -52,7 +54,7 @@ header {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 16px;
+    font-size: 18px;
     transition: color 0.3s;
 }
 
@@ -67,7 +69,7 @@ header {
     background-color: white;
     color: black;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
     display: none;
     min-width: 150px;
     z-index: 2000;
@@ -104,7 +106,7 @@ header {
     cursor: pointer;
 }
 
-@media (max-width: 779px) {
+@media (max-width: 839px) {
     .menu-container {
         flex-direction: row;
         justify-content: space-between;
