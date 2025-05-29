@@ -48,6 +48,11 @@
                 content: " *";
                 color: red;
             }
+
+            .modal-open {
+                overflow: auto !important;
+                padding-right: 0 !important;
+            }
         </style>
     </head>
     <body>
@@ -95,7 +100,7 @@
         </header>
         <div class="container mt-5 mb-5">
             <div class="card shadow-lg p-4 bg-white rounded-3" style="max-width: 700px; margin: 0 auto; margin-top: 80px">
-                <h2 class="text-center text-success mb-4">Editar usuario</h2>
+                <h2 class="text-center text-success mb-4">Editar datos personales</h2>
 
                 <form id="profile-form" action="{{route('perfil-update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -188,6 +193,43 @@
                 </form>
                 <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 2;"></div>
             </div>
+
+            <div class="card shadow-lg p-4 bg-white rounded-3" style="max-width: 700px; margin: 0 auto; margin-top: 80px">
+                <h2 class="text-center text-success mb-4">Mis recetas</h2>
+
+                @foreach ($recipes as $recipe)
+                    <div class="card mb-4 shadow-sm border-0">
+                        <div class="row g-0 border border-success border-3 rounded-4">
+                            <div class="col-md-4 d-flex align-items-center justify-content-center" style="min-height: 200px;">
+                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#imageModal-{{$recipe->id}}">
+                                    <i class="fas fa-search-plus me-2"></i> Ver imagen
+                                </button>
+                            </div>
+                            <div class="col-md-8 p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-success">{{$recipe->name}}</h5>
+                                    <p class="card-text text-muted mb-2">{{$recipe->description}}</p>
+                                    <p class="card-text"><small>{{$recipe->instructions}}</small></p>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-success btn-sm me-2"
+                                    data-bs-toggle="modal" data-bs-target="#editModal-{{$recipe->id}}">
+                                        Editar
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm"
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal-{{$recipe->id}}">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @include('components.modals.edit-recipe', ['recipe' => $recipe])
+                    @include('components.modals.delete-recipe', ['recipe' => $recipe])
+                    @include('components.modals.see-recipe', ['recipe' => $recipe])
+                @endforeach
+            </div>
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -217,6 +259,26 @@
                 });
             });
 
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('hide.bs.modal', () => {
+                    if (modal.contains(document.activeElement)) {
+                    document.activeElement.blur();
+                    }
+                    document.body.style.overflow = 'auto';
+                });
+
+                modal.addEventListener('hidden.bs.modal', () => {
+                    const anchor = document.getElementById('focus-anchor');
+                    if (anchor) anchor.focus({ preventScroll: true });
+                    document.body.style.overflow = 'auto';
+                });
+                });
+
+                document.addEventListener('show.bs.modal', () => {
+                // Quitar clase que bloquea scroll trasero
+                document.body.classList.remove('modal-open');
+            });
+
             function showToast(message, type = 'success') {
                 const toastHTML = `
                     <div class="toast align-items-center text-white bg-${type} border-0 mb-2" role="alert">
@@ -235,5 +297,6 @@
         <footer>
             <p>&copy; 2025 NutriTech - Todos los derechos reservados.</p>
         </footer>
+        <div id="focus-anchor" tabindex="-1" style="position:absolute; left:-9999px;"></div>
     </body>
 </html>

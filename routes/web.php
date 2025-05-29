@@ -28,6 +28,8 @@ Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth')->
 // RECIPES
 Route::get('/recipe/create', [RecipeController::class, 'create'])->middleware('auth')->name('recipeForm');
 Route::post('/recipe/store', [RecipeController::class, 'storeIngredient'])->middleware('auth')->name('recipes-store');
+Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes-update');
+Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes-destroy');
 
 // PROFILE
 Route::put('/profile', [ProfileController::class, 'update'])->middleware('auth')->name('perfil-update');

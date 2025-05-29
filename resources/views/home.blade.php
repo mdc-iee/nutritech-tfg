@@ -44,14 +44,6 @@
                 z-index: -1; /* Coloca detrás de todo el contenido */
             }
 
-            /* Contenido principal */
-            h1 {
-                margin-top: 20px;
-                font-size: 28px;
-                color: #27ae60; /* Verde azulado oscuro */
-                text-align: center;
-            }
-
             form#formAlimentos {
                 background-color: #ffffff;
                 padding: 20px;
