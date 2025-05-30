@@ -126,7 +126,7 @@
                     <ul class="menu left">
                         <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
                         <li><a href="{{route('recipeForm')}}"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
-                        <li><a href="#"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
+                        <li><a href="{{route('exercises')}}"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
                         <li><a href="{{route('profile')}}"><i class="fas fa-user"></i> Perfil</a></li>
                     </ul>
 

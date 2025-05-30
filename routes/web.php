@@ -23,6 +23,10 @@ Route::view('/registro', "register")->name('registro');
 // "->middleware('auth')" will avoid to enter the page by writing in the route
 Route::view('/home', 'home')->middleware('auth')->name('home');
 Route::view('/recipeForm', 'recipeForm')->middleware('auth')->name('recipeForm');
+Route::view('/exercises', 'exercises_table')->middleware('auth')->name('exercises');
+Route::view('/exercises/easy', 'exercises_table_easy')->middleware('auth')->name('exercises_easy');
+Route::view('/exercises/medium', 'exercises_table_medium')->middleware('auth')->name('exercises_medium');
+Route::view('/exercises/hard', 'exercises_table_hard')->middleware('auth')->name('exercises_hard');
 Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth')->name('profile');
 
 // RECIPES

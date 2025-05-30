@@ -27,10 +27,10 @@
                 </div>
 
                 <ul class="menu left">
-                    <li><a href="{{ route('home') }}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
-                    <li><a href="{{ route('recipeForm') }}"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
-                    <li><a href="{{ route('exercises') }}"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
-                    <li><a href="{{ route('profile') }}"><i class="fas fa-user"></i> Perfil</a></li>
+                    <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
+                    <li><a href="{{route('recipeForm')}}"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
+                    <li><a href="{{route('exercises')}}"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
+                    <li><a href="{{route('profile')}}"><i class="fas fa-user"></i> Perfil</a></li>
                 </ul>
                 <ul class="menu right">
                     <li class="dropdown">
@@ -48,7 +48,7 @@
 
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ route('logout') }}">Cerrar sesión</a>
+                                <a href="{{route('logout')}}">Cerrar sesión</a>
                             </li>
                         </ul>
                     </li>
@@ -62,9 +62,9 @@
         <div class="card-ejercicios">
             <h1 class="titulo-ejercicios">Tabla de Ejercicios</h1>
             <div class="botones">
-                <a href="/exercises_table_easy" class="btn"><i class="fa-solid fa-seedling"></i> Nivel Fácil</a>
-                <a href="/exercises_table_medium" class="btn"><i class="fa-solid fa-dumbbell"></i> Nivel Medio</a>
-                <a href="/exercises_table_hard" class="btn"><i class="fa-solid fa-bolt"></i> Nivel Avanzado</a>
+                <a href="{{route('exercises_easy')}}" class="btn"><i class="fa-solid fa-seedling"></i> Nivel Fácil</a>
+                <a href="{{route('exercises_medium')}}" class="btn"><i class="fa-solid fa-dumbbell"></i> Nivel Medio</a>
+                <a href="{{route('exercises_hard')}}" class="btn"><i class="fa-solid fa-bolt"></i> Nivel Avanzado</a>
 
             </div>
         </div>
