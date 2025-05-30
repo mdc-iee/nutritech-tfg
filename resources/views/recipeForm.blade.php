@@ -21,34 +21,33 @@
 
         <style>
             /* General */
-            body {
-                font-family: 'Arial', sans-serif;
-                background: url('../img/FondoInicio.webp') no-repeat center center fixed; /* Imagen de fondo */
-                background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
-                color: #2c3e50; /* Texto oscuro */
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding-top: 60px; /* Espacio para la barra de navegación fija */
-                position: relative;
-                overflow-x: hidden;
-            }
+           body {
+  font-family: 'Arial', sans-serif;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  position: relative;
+  overflow-x: hidden;
+}
 
-            /* Capa de desenfoque */
-            body::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: inherit;
-                filter: blur(6px);
-                z-index: -1;
-            }
-
+/* Capa de fondo desenfocado con imagen */
+body::before {
+  content: '';
+  position: fixed; /* Para que cubra toda la pantalla, incluso con scroll */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../img/img_fondo2.avif'); /* Reemplaza con la ruta de tu imagen */
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -5;
+}
             label.required::after {
                 content: " *";
                 color: red;
@@ -126,7 +125,7 @@
                     <ul class="menu left">
                         <li><a href="{{route('home')}}"><i class="fas fa-utensils"></i> Recomendaciones</a></li>
                         <li><a href="{{route('recipeForm')}}"><i class="fas fa-plus-circle"></i> Crear receta</a></li>
-                        <li><a href="#"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
+                        <li><a href="{{route('exercises')}}"><i class="fas fa-dumbbell"></i> Tabla de ejercicios</a></li>
                         <li><a href="{{route('profile')}}"><i class="fas fa-user"></i> Perfil</a></li>
                     </ul>
 
