@@ -1,0 +1,190 @@
+/* General */
+body {
+  font-family: 'Arial', sans-serif;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Capa de fondo desenfocado con imagen */
+body::before {
+  content: '';
+  position: fixed; /* Para que cubra toda la pantalla, incluso con scroll */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../img/img_fondo2.avif'); 
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -5;
+}
+/* Contenedor principal */
+.contenedor {
+    text-align: center;
+    background: rgba(255,255,255,0.97);
+    padding: 48px 38px 38px 38px;
+    border-radius: 28px;
+    box-shadow: 0 8px 32px 0 #27ae6040;
+    max-width: 650px;
+    margin: 40px auto 32px auto;
+    position: relative;
+    animation: glowCardEjercicios 2.5s infinite alternate;
+    border: 4px solid #27ae60;
+}
+
+@keyframes glowCardEjercicios {
+  0% {
+    box-shadow: 0 8px 32px 0 #27ae6040, 0 0 0 6px #2ecc71 inset, 0 0 16px #27ae60;
+    border-color: #27ae60;
+  }
+  100% {
+    box-shadow: 0 16px 48px 0 #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 32px #2ecc71;
+    border-color: #2ecc71;
+  }
+}
+
+/* Título con relieve y animación */
+.contenedor h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 32px;
+    text-shadow:
+      0 2px 6px rgba(0,0,0,0.18),
+      0 0 0 #fff,
+      2px 2px 0 #16a085,
+      -2px -2px 0 #16a085,
+      2px -2px 0 #16a085,
+      -2px 2px 0 #16a085,
+      0 4px 12px rgba(39,174,96,0.18);
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    animation: tituloBrillo 2.5s infinite alternate;
+}
+
+@keyframes tituloBrillo {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.13); }
+}
+
+/* Estilo para los ejercicios */
+.ejercicio {
+    margin-bottom: 32px;
+    background: rgba(46,204,113,0.10);
+    border-radius: 16px;
+    padding: 22px 16px;
+    box-shadow: 0 2px 12px rgba(39,174,96,0.12);
+    transition: box-shadow 0.3s, transform 0.2s, border-color 0.3s;
+    border: 2.5px solid #e0f7f1;
+    position: relative;
+    z-index: 1;
+}
+.ejercicio:hover {
+    box-shadow: 0 16px 40px #27ae6040, 0 0 24px #2ecc71;
+    transform: scale(1.045) rotate(-1deg);
+    border-color: #27ae60;
+    background: linear-gradient(135deg, #eafff3 60%, #c8ffe6 100%);
+    z-index: 2;
+}
+
+.ejercicio strong {
+    font-size: 22px;
+    color: #34495e;
+    text-shadow: 0 1px 3px #fff, 0 0 2px #27ae60;
+}
+
+.ejercicio img {
+    max-width: 220px;
+    max-height: 160px;
+    width: auto;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(39,174,96,0.13);
+    margin-top: 14px;
+    border: 2px solid #e0f7f1;
+    background: #fff;
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+.ejercicio img:hover {
+    box-shadow: 0 16px 40px #27ae60, 0 0 16px #2ecc71;
+    transform: scale(1.13) rotate(-2deg);
+    z-index: 2;
+}
+
+/* Botón de volver impresionante */
+.btn {
+    display: inline-block;
+    background: linear-gradient(90deg, #2ecc71 60%, #16a085 100%);
+    color: white;
+    text-decoration: none;
+    padding: 16px 36px;
+    font-size: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px #27ae6040, 0 0 0 6px #2ecc71 inset;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 3px solid #27ae60;
+    margin-top: 24px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s, border-color 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    animation: glowBtnEjercicio 2.5s infinite alternate;
+}
+@keyframes glowBtnEjercicio {
+  0% {
+    box-shadow: 0 8px 24px #27ae6040, 0 0 0 6px #2ecc71 inset, 0 0 12px #27ae60;
+    border-color: #27ae60;
+  }
+  100% {
+    box-shadow: 0 16px 40px #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 24px #2ecc71;
+    border-color: #2ecc71;
+  }
+}
+.btn::after {
+    content: "";
+    position: absolute;
+    left: -75%;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.0) 100%);
+    transform: skewX(-25deg);
+    transition: left 0.5s;
+    z-index: 1;
+}
+.btn:hover::after {
+    left: 120%;
+    transition: left 0.5s;
+}
+.btn:hover {
+    background: linear-gradient(90deg, #16a085 60%, #2ecc71 100%);
+    transform: scale(1.07);
+    box-shadow: 0 16px 40px #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 32px #2ecc71;
+    border-color: #16a085;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+    .contenedor {
+        max-width: 98vw;
+        padding: 18px 2vw 18px 2vw;
+    }
+    .ejercicio img {
+        max-width: 98vw;
+    }
+    .btn {
+        font-size: 1rem;
+        padding: 12px 0;
+    }
+    .contenedor h1 {
+        font-size: 1.5rem;
+    }
+}
