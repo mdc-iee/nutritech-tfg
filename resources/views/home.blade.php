@@ -17,32 +17,33 @@
         <style>
             /* General */
             body {
-                font-family: 'Arial', sans-serif;
-                background: url('../img/FondoInicio.webp') no-repeat center center fixed; /* Imagen de fondo */
-                background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
-                color: #2c3e50; /* Texto oscuro */
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding-top: 60px; /* Espacio para la barra de navegación fija */
-                position: relative;
-                overflow-x: hidden;
-            }
+  font-family: 'Arial', sans-serif;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  position: relative;
+  overflow-x: hidden;
+}
 
-            /* Capa de desenfoque */
-            body::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: inherit; /* Usa la misma imagen de fondo */
-                filter: blur(6px); /* Aplica desenfoque */
-                z-index: -1; /* Coloca detrás de todo el contenido */
-            }
+/* Capa de fondo desenfocado con imagen */
+body::before {
+  content: '';
+  position: fixed; /* Para que cubra toda la pantalla, incluso con scroll */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../img/img_fondo2.avif'); 
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -5;
+}
+
 
             form#formAlimentos {
                 background-color: #ffffff;
