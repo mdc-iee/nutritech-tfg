@@ -40,6 +40,7 @@ class ProfileController extends Controller
 
     public function show() {
         $user = Auth::user();
-        return view('profile', compact('user'));
+        $recipes = $user->recipes()->latest()->paginate(5);
+        return view('profile', compact('user', 'recipes'));
     }
 }
