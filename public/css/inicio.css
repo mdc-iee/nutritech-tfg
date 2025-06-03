@@ -1,0 +1,632 @@
+/* General */
+body {
+  font-family: 'Arial', sans-serif;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Capa de fondo desenfocado con imagen */
+body::before {
+  content: '';
+  position: fixed; /* Para que cubra toda la pantalla, incluso con scroll */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../img/img_fondo2.avif'); /* Reemplaza con la ruta de tu imagen */
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -5;
+}
+
+/* Contenido principal */
+h1 {
+  margin-top: 20px;
+  font-size: 28px;
+  color: #27ae60; /* Verde azulado oscuro */
+  text-align: center;
+}
+
+#formWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 32px;
+}
+
+form#formAlimentos {
+  background: linear-gradient(135deg, #eafff3 60%, #c8ffe6 100%);
+  border-radius: 28px;
+  box-shadow: 0 16px 48px #27ae6040, 0 0 0 10px #2ecc7130 inset;
+  border: 5px solid #2ecc71;
+  padding: 38px 38px 32px 38px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px 48px;
+  max-width: 900px;
+  width: 100%;
+  min-width: 320px;
+  animation: slideUp 0.7s;
+  position: relative;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  overflow: visible;
+  align-items: stretch;
+  justify-items: center;
+}
+
+form#formAlimentos label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Cambia a flex-start para alinear a la izquierda */
+  gap: 32px 40px;
+  font-size: 1.15rem;
+  color: #34495e;
+  font-weight: 500;
+  background: rgba(255,255,255,0.92);
+  border-radius: 14px;
+  padding: 10px 18px; /* Menos padding vertical y más horizontal */
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  box-shadow: 0 2px 8px #2ecc7110;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+form#formAlimentos label:hover {
+  background: #eafff3;
+  box-shadow: 0 4px 16px #27ae6040;
+  transform: translateY(-2px) scale(1.03);
+}
+
+form#formAlimentos button {
+  grid-column: 1 / -1;
+  margin: 18px auto 0 auto;
+  width: 60%;
+  min-width: 220px;
+  max-width: 340px;
+  background: linear-gradient(90deg, #2ecc71 60%, #16a085 100%);
+  color: #fff;
+  border: 2.5px solid #27ae60;
+  padding: 13px 0;
+  font-size: 1.18rem;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 24px #27ae6040, 0 0 0 6px #2ecc71 inset;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s, border-color 0.3s;
+  animation: glowBtnVerde 2.5s infinite alternate;
+  display: block;
+}
+
+form#formAlimentos button:hover {
+  background: linear-gradient(90deg, #16a085 60%, #2ecc71 100%);
+  transform: scale(1.07);
+  box-shadow: 0 16px 40px #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 32px #2ecc71;
+  border-color: #16a085;
+}
+
+/* Responsive mejorado */
+@media (max-width: 900px) {
+  form#formAlimentos {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 28px 10px 18px 10px;
+  }
+  form#formAlimentos button {
+    width: 90%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  form#formAlimentos {
+    grid-template-columns: 1fr;
+    padding: 14px 2vw 10px 2vw;
+    border-radius: 16px;
+    gap: 16px 0;
+  }
+  form#formAlimentos button {
+    font-size: 1rem;
+    padding: 12px 0;
+    width: 100%;
+  }
+}
+
+/* Resultado */
+#resultado {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: transparent;
+  border-radius: 0;
+  text-align: center;
+  font-size: 18px;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-x: auto;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #2ecc71 #eafff3;
+  width: 95vw;         
+  max-width: 1600px;   
+  margin-left: auto;   
+  margin-right: auto;
+}
+
+#resultado::-webkit-scrollbar {
+  height: 10px;
+  background: #eafff3;
+}
+#resultado::-webkit-scrollbar-thumb {
+  background: #2ecc71;
+  border-radius: 6px;
+}
+
+/* Recomendaciones */
+section.recomendaciones {
+  margin-top: 30px;
+  text-align: center;
+}
+
+section.recomendaciones h2 {
+  font-size: 24px;
+  color: #27ae60;
+}
+
+section.recomendaciones ul {
+  list-style: none;
+  padding: 0;
+}
+
+section.recomendaciones ul li {
+  margin: 10px 0;
+}
+
+section.recomendaciones ul li a {
+  text-decoration: none;
+  color: #2ecc71;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+section.recomendaciones ul li a:hover {
+  color: #16a085;
+}
+
+/*recetas*/
+
+.receta {
+  text-align: center;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Ajusta el ancho máximo del cuadro */
+}
+
+.receta h2 {
+  font-size: 20px;
+  color: #27ae60;
+  margin-bottom: 10px;
+}
+
+.receta-imagen {
+  display: block;
+  margin: 0 auto 10px auto; 
+  width: 180px;             
+  height: 180px;            
+  object-fit: contain;      
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 16px #2ecc7130;
+  padding: 10px;       
+}
+
+.receta p {
+  font-size: 14px;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+.receta:empty {
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Carrusel */
+
+.seccion-titulo {
+  color: #fff;
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin: 40px 0 20px 16px;
+  letter-spacing: 1px;
+  /* Relieve blanco y borde verde */
+  text-shadow:
+    0 2px 6px rgba(0,0,0,0.18),   
+    0 0 0 #fff,                   
+    2px 2px 0 #27ae60,            
+    -2px -2px 0 #27ae60,          
+    2px -2px 0 #27ae60,           
+    -2px 2px 0 #27ae60,           
+    0 4px 12px rgba(39,174,96,0.25); 
+}
+
+/* Carrusel */
+.carousel-container {
+  max-width: 70%; /* Más ancho, ocupa casi toda la pantalla */
+  margin: 40px auto 0 auto;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 #27ae6040, 0 0 0 6px #2ecc71 inset;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #27ae60;
+  animation: glowCarrusel 2.5s infinite alternate;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes glowCarrusel {
+  0% {
+    box-shadow: 0 8px 32px 0 #27ae6040, 0 0 0 6px #2ecc71 inset, 0 0 16px #27ae60;
+    border-color: #27ae60;
+  }
+  100% {
+    box-shadow: 0 16px 48px 0 #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 32px #2ecc71;
+    border-color: #2ecc71;
+  }
+}
+
+.carousel {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; 
+}
+
+.carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  background: #f8f8f8;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+  border: 3px solid #2ecc71;
+  cursor: pointer;
+  transition: 
+    transform 0.25s cubic-bezier(.4,2,.6,1),
+    box-shadow 0.25s,
+    border-color 0.25s;
+  width: 200px;      /* Aumentado ligeramente */
+  height: 200px;     
+  position: relative;
+  z-index: 1;
+}
+
+.carousel-item:hover {
+  transform: scale(1.13) rotate(-2deg);
+  box-shadow: 0 12px 32px #27ae6040, 0 0 24px #2ecc71;
+  border-color: #16a085;
+  background: linear-gradient(135deg, #eafff3 60%, #c8ffe6 100%);
+}
+
+.carousel-item img {
+  display: block;
+  margin: 0 auto;
+  max-width: 160px; /* Ligeramente más grande */
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 0 16px #2ecc7130;
+  transition: box-shadow 0.3s;
+}
+
+.carousel-item:hover img {
+  box-shadow: 0 0 32px #27ae60, 0 0 16px #2ecc71;
+}
+
+/* Popup */
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(44, 62, 80, 0.75); /* Fondo oscuro más suave */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.4s;
+  backdrop-filter: blur(2px); /* Sutil desenfoque de fondo */
+}
+
+.popup-content {
+ background: linear-gradient(135deg, #eafff3 60%, #c8ffe6 100%);
+  border-radius: 28px;
+  box-shadow: 0 16px 48px #27ae6040, 0 0 0 10px #2ecc7130 inset;
+  border: 5px solid #2ecc71;
+  padding: 38px 38px 32px 38px;
+  text-align: center;
+  width: 540px;           
+  height: 650px;        
+  min-width: 540px;      
+  max-width: 540px;       
+  min-height: 650px;      
+  max-height: 650px;      
+  overflow-y: auto;       
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  animation: slideUp 0.5s;
+  color: #2c3e50;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.popup-content::-webkit-scrollbar {
+  display: none;                 
+}
+
+.close-btn {
+  position: absolute;
+  top: 18px; right: 24px;
+  font-size: 34px;
+  color: #27ae60;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px #2ecc7130;
+  border: 3px solid #2ecc71;
+  transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background: linear-gradient(135deg, #2ecc71 60%, #16a085 100%);
+  color: #fff;
+  transform: scale(1.13) rotate(-10deg);
+  border-color: #16a085;
+  box-shadow: 0 8px 32px #16a08560;
+}
+
+/* Imagen dentro del popup */
+#recipeImage {
+  max-width: 180px;
+  max-height: 140px;
+  border-radius: 16px;
+  margin: 18px auto 16px auto;
+  display: block;
+  background: #fff;
+  box-shadow: 0 0 24px #2ecc7130;
+  padding: 10px;
+  border: 2.5px solid #2ecc71;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Título del popup */
+.popup-content h2 {
+  color: #27ae60;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 0 0 #fff, 2px 2px 0 #27ae60;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Texto del popup */
+.popup-content p {
+  font-size: 1.15rem;
+  color: #34495e;
+  margin-bottom: 10px;
+  line-height: 1.7;
+}
+
+/* Botón dentro del popup */
+.popup-content button, .popup-content .btn-verde {
+  margin-top: 22px;
+  padding: 12px 36px;
+  background: linear-gradient(90deg, #2ecc71 60%, #16a085 100%);
+  color: #fff;
+  font-size: 1.15rem;
+  border: 2.5px solid #27ae60;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 24px #27ae6040, 0 0 0 6px #2ecc7130 inset;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s, border-color 0.3s;
+  animation: glowBtnVerde 2.5s infinite alternate;
+}
+
+.popup-content button:hover, .popup-content .btn-verde:hover {
+  background: linear-gradient(90deg, #16a085 60%, #2ecc71 100%);
+  transform: scale(1.09);
+  box-shadow: 0 12px 32px #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 32px #2ecc71;
+  border-color: #16a085;
+}
+
+/* Botón verde para mostrar el formulario */
+.btn-verde {
+  display: block;
+  margin: 32px auto 24px auto;
+  padding: 14px 32px;
+  background: linear-gradient(90deg, #2ecc71 60%, #16a085 100%);
+  color: #fff;
+  font-size: 1.3rem;
+  border: 3px solid #27ae60;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 24px #27ae6040, 0 0 0 6px #2ecc71 inset;
+  transition: 
+    background 0.3s, 
+    transform 0.2s, 
+    box-shadow 0.3s, 
+    border-color 0.3s;
+  animation: glowBtnVerde 2.5s infinite alternate;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes glowBtnVerde {
+  0% {
+    box-shadow: 0 8px 24px #27ae6040, 0 0 0 6px #2ecc71 inset, 0 0 12px #27ae60;
+    border-color: #27ae60;
+  }
+  100% {
+    box-shadow: 0 16px 40px #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 24px #2ecc71;
+    border-color: #2ecc71;
+  }
+}
+
+.btn-verde:hover {
+  background: linear-gradient(90deg, #16a085 60%, #2ecc71 100%);
+  transform: scale(1.07);
+  box-shadow: 0 16px 40px #16a08560, 0 0 0 12px #2ecc7130 inset, 0 0 32px #2ecc71;
+  border-color: #16a085;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Custom Checkbox cross-browser */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.15rem;
+  color: #34495e;
+  font-weight: 500;
+  background: rgba(255,255,255,0.92);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  box-shadow: 0 2px 8px #2ecc7110;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  left: 0;
+  top: 0;
+  margin: 0;
+  z-index: 2;
+  pointer-events: all;
+}
+
+.custom-checkbox .checkmark {
+  all: unset;
+  width: 26px !important;
+  height: 26px !important;
+  border: 2.5px solid #2ecc71 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  display: inline-block !important;
+  position: relative !important;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s !important;
+  box-shadow: 0 2px 8px #2ecc7110 !important;
+  vertical-align: middle !important;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  margin: 0 !important;
+  z-index: 2 !important;
+  pointer-events: all !important;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  background: linear-gradient(135deg, #2ecc71 60%, #16a085 100%) !important;
+  border-color: #16a085 !important;
+  box-shadow: 0 0 0 4px #2ecc7130 !important;
+}
+
+.custom-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 8px;
+  top: 6px;
+  width: 7px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 4px 4px 0;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  box-sizing: border-box;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark:after {
+  display: block;
+}
+
+/* Footer */
+footer {
+  margin-top: 30px;
+  background-color: #2ecc71;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
